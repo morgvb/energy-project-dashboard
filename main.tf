@@ -4,8 +4,8 @@ terraform {
 
 provider "aws" {
     region = var.availability_zone
-    access_key = "AKIAS6IRHBJYHHQBWD7A"
-    secret_key = "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"
+    access_key = <INSERT_KEY>
+    secret_key = <INSERT_SECRET_KEY>
 }
 
 # Create Route 53 Resolver
@@ -278,5 +278,35 @@ resource "aws_ecs_task_set" "data-service" {
     target_group_arn = aws_lb_target_group.example.arn
     container_name   = "data_service:latest"
     container_port   = 8080
+  }
+}
+
+# Create ECR repositories
+
+resource "aws_ecr_repository" "project-service-ecr" {
+  name = "project-service"
+
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
+  tags = {
+    Name = "Project Service"
+  }
+}
+
+resource "aws_ecr_repository" "data-service-ecr" {
+  name = "data-service"
+
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+  
+  tags = {
+    Name = "Data Visualization Service"
   }
 }
