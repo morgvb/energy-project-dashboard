@@ -4,6 +4,7 @@ terraform {
 
 provider "aws" {
     region = var.availability_zone
+    # In a real configuration, configure keys with Hashicorp Vault
     access_key = <INSERT_KEY>
     secret_key = <INSERT_SECRET_KEY>
 }
@@ -88,7 +89,7 @@ resource "aws_route_table" "private-rt" {
 resource "aws_subnet" "public-subnet-1" {
     vpc_id = aws_vpc.prod-vpc.id
     cidr_block = "10.0.0.0/24"
-    availability_zone = var.availability_zone
+    availability_zone = var.az1
 
     tags = {
         Name = "public subnet 1"
@@ -98,7 +99,7 @@ resource "aws_subnet" "public-subnet-1" {
 resource "aws_subnet" "public-subnet-2" {
     vpc_id = aws_vpc.prod-vpc.id
     cidr_block = "10.0.1.0/24"
-    availability_zone = var.availability_zone
+    availability_zone = var.az2
 
     tags = {
         Name = "public subnet 2"
@@ -108,7 +109,7 @@ resource "aws_subnet" "public-subnet-2" {
 resource "aws_subnet" "public-subnet-3" {
     vpc_id = aws_vpc.prod-vpc.id
     cidr_block = "10.0.2.0/24"
-    availability_zone = var.availability_zone
+    availability_zone = var.az1
 
     tags = {
         Name = "public subnet 3"
@@ -119,7 +120,7 @@ resource "aws_subnet" "public-subnet-3" {
 resource "aws_subnet" "private-subnet-1" {
     vpc_id = aws_vpc.prod-vpc.id
     cidr_block = "10.0.3.0/24"
-    availability_zone = var.availability_zone
+    availability_zone = var.az2
 
     tags = {
         Name = "private subnet 1"
@@ -129,7 +130,7 @@ resource "aws_subnet" "private-subnet-1" {
 resource "aws_subnet" "private-subnet-2" {
     vpc_id = aws_vpc.prod-vpc.id
     cidr_block = "10.0.4.0/24"
-    availability_zone = var.availability_zone
+    availability_zone = var.az1
 
     tags = {
         Name = "private subnet 2"
@@ -139,7 +140,7 @@ resource "aws_subnet" "private-subnet-2" {
 resource "aws_subnet" "private-subnet-3" {
     vpc_id = aws_vpc.prod-vpc.id
     cidr_block = "10.0.5.0/24"
-    availability_zone = var.availability_zone
+    availability_zone = var.az2
 
     tags = {
         Name = "private subnet 3"
@@ -255,7 +256,6 @@ data "aws_ecs_task_definition" "project-service" {
 data "aws_ecs_task_definition" "data-service" {
   task_definition = "${aws_ecs_task_definition.data-service.family}"
 }
-
 
 resource "aws_ecs_task_set" "project-service" {
   service         = project_service.example.id

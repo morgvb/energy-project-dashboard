@@ -66,4 +66,6 @@ This combination of ECS, load balancing, automatic scaling, multiple Availabilit
 
 ## Limitations
 
-This setup could be improved by logically separating the more complex processes. This would include creating separate environments for `development` and `production` as well as creating separate modules for the configuration of `vpc`, `ecs`, and `rds`.
+This setup would be improved by logically separating the complex processes. This would include creating separate environments for `development` and `production` as well as creating separate modules for the configuration of `vpc`, `ecs`, and `rds`.
+
+This configuration is simplified and both `variables.tf` and `outputs.tf` are incomplete. In a real configuration, testing the provisioning of the Terraform resources would help inform variables and outputs to include. I would also configure Hashicorp Vault to handle access to AWS and manage credentials securely.

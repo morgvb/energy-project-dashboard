@@ -1,7 +1,17 @@
-# used us-east-1 for testing purposes, could swap out for eu-central-1
+# Used us-east-1 for testing purposes, could swap out for eu-central-1
 variable "availability_zone" {
   description = "availability zone"
   default = "us-east-1" 
+}
+
+variable "az1" {
+  description = "availability zone"
+  default = "us-east-1a" 
+}
+
+variable "az2" {
+  description = "availability zone"
+  default = "us-east-1b" 
 }
 
 variable "public_subnet_ids" {
